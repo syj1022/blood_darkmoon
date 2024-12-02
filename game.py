@@ -418,6 +418,19 @@ else:
                 death_list.append(int(ck_who))
             data[get_index('刺客')][2] = '不可'
             
+    if check_alive('教父'):
+        if lynched != None:
+            if lynched[-1] in wlz_list:
+                sn_info[get_index('教父')] = True
+                godfather = input(f'{get_index("教父")}号教父选择要杀的人：')
+                if not check_dizzy('教父'):
+                    if check_killable(int(godfather)):
+                        if check_amulet(int(godfather)):
+                            data[int(godfather)][2] = '不可'
+                        else:
+                            data[int(godfather)][0] = '死亡'
+                            death_list.append(int(godfather))
+    
             
     if check_alive('教授') and data[get_index('教授')][2] != '不可':
         sn_info[get_index('教授')] = True
@@ -453,8 +466,9 @@ else:
                     if check_amulet(int(yzz)):
                         data[int(yzz)][2] = '不可'
                     else:
-                        data[int(yzz)][0] = '死亡'
-                        death_list.append(int(yzz))
+                        if data[int(yzz)][-1] in [tf_list, wlz_list]:
+                            data[int(yzz)][0] = '死亡'
+                            death_list.append(int(yzz))
         data[get_index('月之子')][0] = '死亡'
         
     number = 99
@@ -482,20 +496,7 @@ else:
         else:
             sn_result_fake = random.choice([x for x in range(3) if x != true_count])
             sn_result = input(f' - 侍女的信息是：{sn_result_fake}')
-'''
-if check_alive('茶艺师'): 
-    if not check_dizzy('茶艺师'):
-        for i in range(1,15):
-            if data[get_index('茶艺师')-i][0] != '死亡' and data[get_index('茶艺师')-i][0] != '垂死':
-                break
-        for j in range(1,15):
-            if data[get_index('茶艺师')-(len(data)-1)+j][0] != '死亡' and data[get_index('茶艺师')-(len(data)-1)+j][0] != '垂死':
-                break
-                
-        if data[get_index('茶艺师')-i][-1] not in demon_list and data[get_index('茶艺师')-i][-1] not in minion_list and data[get_index('茶艺师')-(len(data)-1)+j][-1] not in demon_list and data[get_index('茶艺师')-(len(data)-1)+j][-1] not in minion_list:
-                data[get_index('茶艺师')-i][0] = '无敌'
-                data[get_index('茶艺师')-(len(data)-1)+j][0] = '无敌'
-'''                
+             
 
 
 if get_index('月之子') in death_list:
